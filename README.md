@@ -52,10 +52,13 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", host: 1080, guest: 1080 # mailCatcher
   #
   # Share your project folder which has docker-compose.yml to vagrant home folder
-  # Mac OSX is needs for permission to teminal soft at system > sequrity,privacy > Full disk access > add terminal soft.
-  # ( Edit home dir for your enviroment. )
+  # MacOSX(Mojave) needs permission at system > sequrity,privacy > Full disk access > add your terminal soft.
+  # MacOSX(Catalina) needs add prefix "/System/Volumes/Data" for your local folder.
+  # (Edit your enviroment. OS and username and working directory.)
   #
-  config.vm.synced_folder "/Users/sakai/dev/magento2nginx", "/home/vagrant/magento2nginx", type: "nfs"
+  # config.vm.synced_folder "/Users/sakai/dev/magento2nginx", "/home/vagrant/magento2nginx", type: "nfs"
+  config.vm.synced_folder "/System/Volumes/Data/Users/sakai/dev/magento2nginx", "/home/vagrant/magento2nginx", type: "nfs"
+  
 end
 ---
 ##
