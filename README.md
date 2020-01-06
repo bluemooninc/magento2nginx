@@ -82,14 +82,14 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.25.0/docker
 ```bash
 $ sudo chmod +x /usr/local/bin/docker-compose
 ```
-## Download magent2docker setting files from github
+## Clone or Download magent2docker container build files from github
 ```bash
 git clone git@github.com:bluemooninc/magento2nginx.git
 [vagrant@localhost ~]$ cd magento2docker
-[vagrant@localhost ~]$ docker-compose up
+[vagrant@localhost ~]$ vi docker-compose.yaml
 ```
 
-## Build a Docker container
+## Customise and build a docker container
 
 ### Container Description
 
@@ -135,7 +135,7 @@ git clone git@github.com:bluemooninc/magento2nginx.git
   TZ: "Asia/Tokyo"
 ```
 
-# Into Docker by ssh setup your magento
+# Into Docker by ssh and setup your magento
 At vagrant ssh, You can build docker environment using docker-compose.
 ```bash
 # Build and run your container
