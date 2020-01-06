@@ -15,6 +15,7 @@ https://www.virtualbox.org/
 https://www.vagrantup.com/
 
 ## Setup Vagrant
+If you don't have Virtualbox and Vagrant set up like this.
 ```
 $ vagrant box add centos/7
 
@@ -29,7 +30,10 @@ $ vagrant box list
 $ mkdir -p  ~/vagrant
 $ cd ~/vagrant
 $ vagrant init centos/7
-
+```
+Edit Vagrant file for vagrant up
+Attention: "config.vm.synced_folder" is super important to customise for your share folder. 
+```
 $ vi Vagrantfile
 ----
 Vagrant.configure("2") do |config|
@@ -61,26 +65,26 @@ Vagrant.configure("2") do |config|
   
 end
 ---
-##
-## How to use
-##
+```
+
+## Into vagrant using ssh and built a docker enviroment
 $ vagrant up
 $ vagrant ssh
 
-# download newest Docker Compose
-# Change `1.17.1` for the version (Check https://github.com/docker/compose/releases)
+### download newest Docker Compose
 $ sudo curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 
-# set permission for runnnig binary
+### set permission for runnnig binary
 $ sudo chmod +x /usr/local/bin/docker-compose
 
-# Download magent2 docker setting files from github
+## Download magent2docker setting files from github
+```
 git clone git@github.com:bluemooninc/magento2nginx.git
 [vagrant@localhost ~]$ cd magento2docker
 [vagrant@localhost ~]$ docker-compose up
 ```
 
-## Setup Docker
+## Build a Docker container
 
 ### Environment
 
@@ -89,7 +93,8 @@ git clone git@github.com:bluemooninc/magento2nginx.git
   Magento front http://localhost
 
   Magento admin http://localhost/admin/ ( depend your setup )
-* PHP7.3
+
+* PHP7.2
   
   Customise at ./data/phpfpm/php.ini ( Edit for your timezone )
   
@@ -105,15 +110,21 @@ git clone git@github.com:bluemooninc/magento2nginx.git
   You may check any sendmail from Magento service.
 
   mail Client GUI is http://localhost:1080
-* Docker
+* Edit for your docker-compose.yaml
+  those parameter is blackfire.io and date/time-zone.
+  Get your account at https://blackfire.io and change YOUR_SOMETHING_ID,TOKEN.
+  And also you need to install Chrome or firefox browser extension about blackfire client.
+```yaml
+  # Exposes the host BLACKFIRE_SERVER_ID and TOKEN environment variables.
+  BLACKFIRE_SERVER_ID : YOUR_SERVER_ID
+  BLACKFIRE_SERVER_TOKEN : YOUR_SERVER_TOKEN
+  BLACKFIRE_CLIENT_ID : YOUR_CLIENT_ID
+  BLACKFIRE_CLIENT_TOKEN : YOUR_CLIENT_TOKEN
+  TZ: "Asia/Tokyo"
+```
 
-  docker-compose.yml ( Edit for your timezone )
-
-      environment:
-        TZ: "Asia/Tokyo"
-
-### How To Run
-
+# Into Docker by ssh setup your magento
+At vagrant ssh, You can build docker environment using docker-compose.
 ```bash
 # Build and run your container
 docker-compose up
@@ -125,10 +136,6 @@ docker ps
 # ssh login to php container
 docker exec -it phpfpm /bin/sh
 
-# install composer
-curl -sS https://getcomposer.org/installer -o composer-setup.php
-php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
 #
 # install magento ( you have to get account at magento.com )
 #
@@ -138,6 +145,13 @@ Password: [YOUR-PRIVATE-KEY]
 
 chmod -R 777 /var/www/html
 
+### Error Tips: When you've got an error below.
+[Exception] Warning: SessionHandler::read():
+Please add the below code in app/etc/env.php and it will works fine.
+array (
+'save' => 'files',
+'save_path' => '/tmp',
+),
 ```
 
 # Create database
@@ -168,7 +182,7 @@ php bin/magento sampledata:deploy
 # Setup sample data
 php bin/magento setup:upgrade
 
-
+# Exit all and rest your time
 docker-compose down
 vagrant halt
 bye!!!

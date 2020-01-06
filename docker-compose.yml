@@ -34,7 +34,14 @@ services:
   phpfpm:
     container_name: phpfpm
     restart: always
-    build: ./data/phpfpm/
+    build:
+      context: ./data/phpfpm/
+      args:
+        # Exposes the host BLACKFIRE_SERVER_ID and TOKEN environment variables.
+        BLACKFIRE_SERVER_ID : YOUR_SERVER_ID
+        BLACKFIRE_SERVER_TOKEN : YOUR_SERVER_TOKEN
+        BLACKFIRE_CLIENT_ID : YOUR_CLIENT_ID
+        BLACKFIRE_CLIENT_TOKEN : YOUR_CLIENT_TOKEN
     ports:
       - "9000:9000"
     environment:
