@@ -31,7 +31,7 @@ $ mkdir -p  ~/vagrant
 $ cd ~/vagrant
 $ vagrant init centos/7
 ```
-Edit Vagrant file for vagrant up
+Edit Vagrant file for vagrant up.
 Attention: "config.vm.synced_folder" is super important to customise for your share folder. 
 ```
 $ vi Vagrantfile
@@ -67,18 +67,23 @@ end
 ---
 ```
 
-## Into vagrant using ssh and built a docker enviroment
+## Into vagrant using ssh and built a docker environment
+```
 $ vagrant up
 $ vagrant ssh
+```
 
 ### download newest Docker Compose
+```bash
 $ sudo curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+```
 
 ### set permission for runnnig binary
+```bash
 $ sudo chmod +x /usr/local/bin/docker-compose
-
-## Download magent2docker setting files from github
 ```
+## Download magent2docker setting files from github
+```bash
 git clone git@github.com:bluemooninc/magento2nginx.git
 [vagrant@localhost ~]$ cd magento2docker
 [vagrant@localhost ~]$ docker-compose up
@@ -86,23 +91,30 @@ git clone git@github.com:bluemooninc/magento2nginx.git
 
 ## Build a Docker container
 
-### Environment
+### Container Description
 
-* Magento2.3
+* Magento2.3.3
 
   Magento front http://localhost
-
   Magento admin http://localhost/admin/ ( depend your setup )
 
-* PHP7.2
+* PHP7.2 and BlackFire-agent
   
   Customise at ./data/phpfpm/php.ini ( Edit for your timezone )
-  
   date.timezone = Asia/Tokyo
+  
+  As you can see blaclfire status.
+```bash
+  php -i | grep blackfire
+```
+  
 * MySql5.7
 * phpMyAdmin4.9
 
   Database GUI http://localhost:8085
+  ID:root
+  PW:password
+  
 * mailCatcher
 
   mailCatcher is a internal use SMTP server witch has client GUI.
