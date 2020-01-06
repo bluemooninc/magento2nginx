@@ -1,9 +1,9 @@
 # Magento2nginx
 
-This project is build docker images for Magento2 that useing nginx and php-fpm.
-Not only local enviroment but also build Multi-binary for Japan,Korea,China and Russia charactors.
+This project is build docker images for Magento2 that useing nginx, php-fpm, MySQL, phpMyAdmin, BlackFire and mailCatcher.
+It has also Multi-binary strings for Japan,Korea,China and Russia.
 
-Memo: Do NOT use 'docker for macintosh'. mac os file system and docker share holder is really slow.
+Attention: Do NOT use 'docker for macintosh'. mac os file system and docker share holder is really slow.
 I strongly recommend use VirtualBox and Vagrant launch linux(CentOS etc.) for Docker base.
 
 # Required
